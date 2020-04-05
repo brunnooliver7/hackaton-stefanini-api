@@ -31,13 +31,13 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  */
 @Entity
 @Table(name = "TB_PESSOA")
-public class Pessoa implements Serializable{
+public class Pessoa implements Serializable {
 
-	
 	/**
 	 * Serializacao da Classe
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * ID da Tabela
 	 */
@@ -51,7 +51,6 @@ public class Pessoa implements Serializable{
 	@NotNull
 	@Column(name = "NO_NOME")
 	private String nome;
-	
 	/**
 	 * Email da Pessoa
 	 */
@@ -70,31 +69,33 @@ public class Pessoa implements Serializable{
 	@NotNull
 	@Column(name = "ST_PESSOA")
 	private Boolean situacao;
-
+	/**
+	 * Imagem da Pessoa
+	 */
+	@Column(name = "DS_CAMINHO_IMAGEM")
+	private String imagem;
 	/**
 	 * Mapeamento de Enderecos Unidirecional
 	 */
-	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name = "CO_SEQ_PESSOA",referencedColumnName = "CO_SEQ_PESSOA")
 	private Set<Endereco> enderecos = new HashSet<>();
-
 	/**
 	 * Mapeamento de Perfis Unidirecional
 	 */
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinTable(
 			name = "TB_PESSOA_PERFIL",
 			joinColumns = {@JoinColumn(name = "CO_SEQ_PESSOA")},
 			inverseJoinColumns = {@JoinColumn(name = "CO_SEQ_PERFIL")}
 	)
 	private Set<Perfil> perfils = new HashSet<>();
+	
 	/**
 	 * Metodo construtor da classe
 	 */
 	public Pessoa() {
 	}
-
 
 	public Set<Perfil> getPerfils() {
 		return perfils;
@@ -111,14 +112,14 @@ public class Pessoa implements Serializable{
 	 * @param dataNascimento
 	 * @param situacao
 	 */
-	public Pessoa(@NotNull String nome, @NotNull String email, @NotNull LocalDate dataNascimento,@NotNull Boolean situacao) {
+	public Pessoa(@NotNull String nome, @NotNull String email, @NotNull LocalDate dataNascimento,@NotNull Boolean situacao, String imagem) {
 		super();
 		this.nome = nome;
 		this.email = email;
 		this.dataNascimento = dataNascimento;
 		this.situacao = situacao;
+		this.imagem = imagem;
 	}
-
 
 	public Set<Endereco> getEnderecos() {
 		return enderecos;
@@ -127,7 +128,6 @@ public class Pessoa implements Serializable{
 	public void setEnderecos(Set<Endereco> enderecos) {
 		this.enderecos = enderecos;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -153,8 +153,6 @@ public class Pessoa implements Serializable{
 		this.dataNascimento = dataNascimento;
 	}
 
-
-
 	public String getEmail() {
 		return email;
 	}
@@ -169,6 +167,14 @@ public class Pessoa implements Serializable{
 
 	public void setSituacao(Boolean situacao) {
 		this.situacao = situacao;
+	}
+	
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
 
 	@Override
@@ -199,15 +205,8 @@ public class Pessoa implements Serializable{
 	@Override
 	public String toString() {
 		return "Pessoa [id=" + id + ", nome=" + nome + ", email=" + email + ", dataNascimento=" + dataNascimento
-				+ ", situacao=" + situacao + "]";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
+				+ ", situacao=" + situacao + ", imagem=" + imagem + ", enderecos=" + enderecos + ", perfils=" + perfils
+				+ "]";
+	}	
 
 }

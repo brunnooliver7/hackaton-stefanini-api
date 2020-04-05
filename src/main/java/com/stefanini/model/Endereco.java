@@ -7,8 +7,6 @@ import java.io.Serializable;
 @Table(name = "tb_endereco")
 public class Endereco implements Serializable {
 
-
-
     /**
      * Serializacao da Classe
      */

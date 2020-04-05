@@ -7,8 +7,9 @@ import java.io.Serializable;
 @Table(name = "tb_pessoa_perfil")
 public class PessoaPerfil implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 
-    @Id
+	@Id
     @Column(name = "co_seq_pessoal_perfil")
     private Long id;
 

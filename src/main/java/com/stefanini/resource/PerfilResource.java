@@ -74,7 +74,6 @@ public class PerfilResource {
         return Response.ok(perfilServico.atualizar(perfil)).build();
     }
 
-
     /**
      *
      * @param id
@@ -84,19 +83,22 @@ public class PerfilResource {
     @Path("{id}")
     public Response deletarPerfil(@PathParam("id") Long id) {
         log.info("Deletando perfil");
-        try{
-            if(perfilServico.encontrar(id).isPresent()){
+        
+        try {
+            if (perfilServico.encontrar(id).isPresent()) {
                 perfilServico.remover(id);
+                System.out.println("try if");
                 return Response.status(Response.Status.OK).build();
-            }else {
+            } else {
+                System.out.println("try else");
                 return Response.status(Response.Status.NOT_FOUND).build();
-            }
+        	}
         } catch (NegocioException e) {
+            System.out.println("catch");
             return Response.status(Response.Status.METHOD_NOT_ALLOWED).entity(new ErroDto(null,e.getMensagem(),id)).build();
         }
 
     }
-
 
     /**
      *

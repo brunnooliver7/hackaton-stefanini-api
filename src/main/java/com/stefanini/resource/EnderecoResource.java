@@ -54,7 +54,12 @@ public class EnderecoResource {
     public Response adicionarEndereco(@Valid Endereco endereco) {
         return Response.ok(enderecoServico.salvar(endereco)).build();
     }
-
+    
+    @POST
+    @Path("buscarCep")
+    public Endereco buscarEnderecoCep(String cep) {
+    	return enderecoServico.converterCep(cep);
+    }
 
     /**
      *
